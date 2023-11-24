@@ -1,25 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
-import Map from './Map';
+import Header from './Header';
+import Booking from './Booking';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <Map />
+    <div>
+       <Header />
+      <div className="title-bar">
+        <div className="container">
+        <h1><strong>23. reprezentační Ples Fakultní nemocnice Olomouc</strong>
+        Rezervační systém
+        </h1>
+
+
+        </div>
+      </div>
+      <div class="container">
+        <Booking />
+    </div>
+      
 
     </div>
   );
