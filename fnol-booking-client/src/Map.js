@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './Map.css';
 
-const Map = ({ funkce }) => {
+const Map = ({ click, vybrane }) => {
+    useEffect(() => {
+      vybrane.forEach(ticket => {
+        const place = document.getElementById(ticket);
+        place.style.fill = "yellow";
+      });
+    }, [vybrane])
     
-
     return (
         <div>
             <div>Mapa</div>
@@ -14,7 +19,7 @@ const Map = ({ funkce }) => {
                 x="0px" y="0px"
                 viewBox="0 0 1280 1024"
             >
-                <g id='tables' onClick={(e) => funkce(e)}>
+                <g id='tables' onClick={(e) => click(e)}>
                     <rect id='tlacitko1' x="112.2" y="83.3" width="48.5" height="48.5" />
                     <rect id='tlacitko2' x="195.6" y="83.3" width="48.5" height="48.5" />
                     <rect id='tlacitko3' x="112.2" y="200.2" width="48.5" height="48.5" />

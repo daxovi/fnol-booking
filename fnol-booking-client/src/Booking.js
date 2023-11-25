@@ -21,9 +21,25 @@ const Booking = () => {
         }
     }
 
+    const handleClick = (e) => {
+        var index = vybrane.indexOf(e.target.id);
+        if (index == -1) {
+            setVybrane(arr => [...arr, e.target.id]);
+        } else {
+            var newArray = [...vybrane];
+            newArray.splice(index, 1);
+            setVybrane(newArray);
+            e.target.style.fill = "black";
+        }
+    }
+
     const reset = () => {
-        var tables = document.getElementById("tables")
-        tables.target.style.fill = "red";
+        vybrane.forEach(ticket => {
+            const place = document.getElementById(ticket);
+        place.style.fill = "black";
+        });
+  
+  //      setVybrane([]);
     }
 
     return (
@@ -33,10 +49,10 @@ const Booking = () => {
             </div>
             <div className="row">
                 <div className="map">
-                    <Map funkce={kliknuto} />
+                    <Map click={handleClick} vybrane={vybrane} />
                 </div>
                 <div className="">
-                    <Summary vybrane={vybrane} />
+                    <Summary vybrane={vybrane} reset={reset} />
                 </div>
             </div>
         </div>

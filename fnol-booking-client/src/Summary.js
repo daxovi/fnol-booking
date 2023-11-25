@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Summary.css'
 
-const Summary = ({ vybrane }) => {
+const Summary = ({ vybrane, reset }) => {
 
     const listItems = vybrane.map((number) =>
         <li>{number}</li>
@@ -56,6 +56,7 @@ const Summary = ({ vybrane }) => {
             </div>
         )
     } else {
+        reset();
         return (
             <div className="summary">
                 <div className="title">
