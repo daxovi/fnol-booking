@@ -16,6 +16,7 @@ function App() {
         </div>
       </div>
       <div class="container">
+        <br />
         <Booking />
     </div>
       

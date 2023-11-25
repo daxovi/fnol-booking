@@ -1,0 +1,51 @@
+.summary {
+    width: 250px;
+}
+.title {
+    color: #244a90;
+    text-transform: uppercase;
+}
+
+ul {
+    padding-inline-start: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+ul li {
+    display: block;
+    background-color: #EBEFF5;
+    padding: 10px;
+}
+
+ul li:last-of-type {
+    background-color: white;
+    padding: 5px 0;
+    border-top: solid 1px #244a90;
+}
+
+input[type=submit] {
+    background-color: #F4F6F9;
+    color: #006d93;
+    text-transform: uppercase;
+    border: none;
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    width: 100%;
+    padding: 20px 0;
+    margin: 20px 0;
+    border-radius:50vh;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+input[type=email] {
+    width: 100%;
+    font-size: 0.88rem;
+}
+
+.icon {
+    text-align: center;
+    margin: 20px;
+}

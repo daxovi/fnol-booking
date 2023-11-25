@@ -2,6 +2,7 @@ import React from 'react';
 import './Map.css';
 
 const Map = ({ funkce }) => {
+    
 
     return (
         <div>
@@ -10,13 +11,10 @@ const Map = ({ funkce }) => {
                 version="1.1"
                 id="Vrstva_1"
                 xmlns="http://www.w3.org/2000/svg"
-                //           xmlns: xlink="http://www.w3.org/1999/xlink"
                 x="0px" y="0px"
                 viewBox="0 0 1280 1024"
-            //       style="enable-background:new 0 0 1280 1024;"
-            //         xml: space="preserve"
             >
-                <g onClick={(e) => funkce(e)}>
+                <g id='tables' onClick={(e) => funkce(e)}>
                     <rect id='tlacitko1' x="112.2" y="83.3" width="48.5" height="48.5" />
                     <rect id='tlacitko2' x="195.6" y="83.3" width="48.5" height="48.5" />
                     <rect id='tlacitko3' x="112.2" y="200.2" width="48.5" height="48.5" />
