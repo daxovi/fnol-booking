@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Summary.css'
 
 const Summary = ({ vybrane, reset }) => {
@@ -7,11 +7,24 @@ const Summary = ({ vybrane, reset }) => {
         <li>{number}</li>
     );
 
+    const [progress, setProgress] = useState(0)
+
+    useEffect(() => {
+        if (progress == 2) {
+            reset()
+        }
+    }, [progress])
+
+    useEffect(() => {
+      if (progress == 2 && vybrane.length == 1) {
+        setProgress(0)
+      }
+    }, [vybrane])
+    
+
     const date = new Date()
     const expireDate = new Date(date);
     expireDate.setDate(date.getDate() + 1);
-
-    const [progress, setProgress] = useState(0)
 
     if (progress == 0) {
         return (
@@ -56,7 +69,6 @@ const Summary = ({ vybrane, reset }) => {
             </div>
         )
     } else {
-        reset();
         return (
             <div className="summary">
                 <div className="title">

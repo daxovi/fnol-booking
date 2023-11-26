@@ -39,7 +39,7 @@ const Booking = () => {
         place.style.fill = "black";
         });
   
-  //      setVybrane([]);
+        setVybrane([]);
     }
 
     return (
