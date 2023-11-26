@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Summary.css'
 
-const Summary = ({ vybrane, reset }) => {
+const Summary = ({ vybrane, reset, handleEmail }) => {
 
     const listItems = vybrane.map((number) =>
         <li>{number}</li>
     );
 
     const [progress, setProgress] = useState(0)
+    const [email, setEmail] = useState("")
 
     useEffect(() => {
         if (progress == 2) {
@@ -16,17 +17,24 @@ const Summary = ({ vybrane, reset }) => {
     }, [progress])
 
     useEffect(() => {
-      if (progress == 2 && vybrane.length == 1) {
-        setProgress(0)
-      }
+        if (progress == 2 && vybrane.length == 1) {
+            setProgress(0)
+        }
     }, [vybrane])
-    
+
+    const saveEmail = () => {
+        if (vybrane.length > 0) {
+            console.log(email);
+            setProgress(1);
+        }
+    }
 
     const date = new Date()
     const expireDate = new Date(date);
     expireDate.setDate(date.getDate() + 1);
 
     if (progress == 0) {
+        // Zadávání emailu
         return (
             <div className="summary">
                 <div className="title">
@@ -36,13 +44,13 @@ const Summary = ({ vybrane, reset }) => {
                     {listItems}
                     <li>Celkem vstupenek: {vybrane.length}</li>
                 </ul>
-                <form action="">
-                    <div class="form-example">
+                <form onSubmit={() => saveEmail()}>
+                    <div>
                         <label for="email">Váš e-mail: </label>
                         <br />
-                        <input type="email" name="email" id="email" required />
+                        <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" name="email" id="email" required />
                     </div>
-                    <div class="form-example">
+                    <div>
                         <input type="submit" value="Rezervovat" />
                     </div>
                     <button type="button" onClick={() => setProgress(1)}>DEBUG: dalsi obraz</button>
@@ -51,6 +59,7 @@ const Summary = ({ vybrane, reset }) => {
 
         )
     } else if (progress == 1) {
+        // Potvrzení rezervace
         return (
             <div className="summary">
                 <div className="title">
@@ -63,12 +72,13 @@ const Summary = ({ vybrane, reset }) => {
                     </svg>
                 </div>
                 <div className="">
-                    <strong>Vyzvedněte si je na pokladně FN Olomouc v budově WA v pracovní dny od 7 do 15.30, nejpozději {`${expireDate.toLocaleDateString()}`}.</strong> <br /> Po tomto datu bude vaše rezervace stornovaná.
+                    <strong>Vyzvedněte si je po nahlášení vašeho emailu {email} na pokladně FN Olomouc v budově WA v pracovní dny od 7 do 15.30, nejpozději {`${expireDate.toLocaleDateString()}`}.</strong> <br /> Po tomto datu bude vaše rezervace stornovaná.
                 </div>
                 <button type="button" onClick={() => setProgress(2)}>DEBUG: dalsi obraz</button>
             </div>
         )
     } else {
+        // zamítnutí rezervace
         return (
             <div className="summary">
                 <div className="title">

@@ -1,28 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Booking.css';
 import Map from './Map';
 import Summary from './Summary';
 
 const Booking = () => {
-    const [vybrane, setVybrane] = useState([])
+    
+    const obsazene = ["tlacitko5"];
+    const [vybrane, setVybrane] = useState([]);
+    const [email, setEmail] = useState("")
 
-    const kliknuto = (e) => {
-        if (e.target.style.fill == 'yellow') {
-            e.target.style.fill = "black";
-            var newArray = [...vybrane];
-            var index = newArray.indexOf(e.target.id);
-            if (index !== -1) {
-                newArray.splice(index, 1);
-            }
-            setVybrane(newArray);
-        } else {
-            e.target.style.fill = "yellow";
-            setVybrane(arr => [...arr, e.target.id])
-        }
+    useEffect(() => {
+      loadDB();
+    }, [])
+
+    const loadDB = () => {
+        console.log("nacitani z databaze");
     }
-
+    
     const handleClick = (e) => {
-        var index = vybrane.indexOf(e.target.id);
+        if (checkAvailability(e.target.id)) {
+            var index = vybrane.indexOf(e.target.id);
         if (index == -1) {
             setVybrane(arr => [...arr, e.target.id]);
         } else {
@@ -31,6 +28,15 @@ const Booking = () => {
             setVybrane(newArray);
             e.target.style.fill = "black";
         }
+        }
+    }
+
+    const handleEmail = (email) => {
+        setEmail(email);
+    }
+
+    const checkAvailability = (ticket) => {
+        return !obsazene.includes(ticket)
     }
 
     const reset = () => {
@@ -49,10 +55,10 @@ const Booking = () => {
             </div>
             <div className="row">
                 <div className="map">
-                    <Map click={handleClick} vybrane={vybrane} />
+                    <Map click={handleClick} vybrane={vybrane} obsazene={obsazene} />
                 </div>
                 <div className="">
-                    <Summary vybrane={vybrane} reset={reset} />
+                    <Summary vybrane={vybrane} reset={reset} handleEmail={handleEmail} />
                 </div>
             </div>
         </div>

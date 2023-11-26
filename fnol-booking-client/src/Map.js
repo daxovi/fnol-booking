@@ -1,13 +1,21 @@
 import React, {useEffect} from 'react';
 import './Map.css';
 
-const Map = ({ click, vybrane }) => {
+const Map = ({ click, vybrane, obsazene }) => {
     useEffect(() => {
       vybrane.forEach(ticket => {
         const place = document.getElementById(ticket);
         place.style.fill = "yellow";
       });
     }, [vybrane])
+
+    useEffect(() => {
+      obsazene.forEach(ticket => {
+        const place = document.getElementById(ticket);
+        place.style.fill = "red";
+      });
+    }, [obsazene])
+    
     
     return (
         <div>
