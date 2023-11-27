@@ -6,7 +6,7 @@ saveMaterial.post("/save-material", (req,res) => {
  })
 
  saveMaterial.get("/save-material", (req,res) => { 
-    res.send("Ano, navštívil jsi /save-material POSTem");
+    res.send("Ano, navštívil jsi /save-material GETem");
  })
 
  module.exports = saveMaterial;
