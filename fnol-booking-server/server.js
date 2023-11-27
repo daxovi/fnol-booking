@@ -7,6 +7,10 @@ const saveMaterial = require("./routes/POST/saveMaterial");
 
 db.connect();
 
+// Middleware
+// Povolme přijímat JSON z frontendu
+app.use(express.json({extended:false}));
+
 // GET
 app.use("/", getMaterials);
 
