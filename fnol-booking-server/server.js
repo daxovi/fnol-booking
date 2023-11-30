@@ -9,6 +9,7 @@ const db = require("./databaze/connect");
 const getMaterials = require("./routes/GET/getMaterial");
 const saveMaterial = require("./routes/POST/saveMaterial");
 
+const cors = require("cors");
 db.connect();
 
 // Middleware
@@ -16,7 +17,7 @@ db.connect();
 app.use(express.json({extended:false}));
 
 // GET
-app.use("/", getMaterials);
+app.use("/", cors(), getMaterials);
 
 // POST
 app.use("/", saveMaterial);

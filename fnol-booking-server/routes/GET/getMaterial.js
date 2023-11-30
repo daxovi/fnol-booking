@@ -1,13 +1,21 @@
 const getMaterials = require("express").Router();
-getMaterials.get("/get-materials", (req,res) => { 
-    res.json({
-        msg:"Úspěšně jsem získal suroviny",
-        seznamSurovin:[
-            {surovina:"Mrkev"},
-            {surovina:"Celer"},
-            {surovina:"Brambora"}
-        ]
-    });
- })
+const materials = require("../../models/material");
 
- module.exports = getMaterials;
+getMaterials.get("/get-materials", (req, res) => {
+    materials
+        .find({})
+        .then(function (docs) {
+            return res.json({
+                msg:"Úspěšně se podařilo načíst dokument",
+                documents:docs
+            })
+        })
+        .catch(function (err) {
+            return res.json({
+                msg:"Nepodařilo se načíst dokument",
+                documents:[]
+            })
+        })
+})
+
+module.exports = getMaterials;
