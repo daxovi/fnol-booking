@@ -1,8 +1,8 @@
-const getMaterials = require("express").Router();
-const materials = require("../../models/material");
+const getTickets = require("express").Router();
+const tickets = require("../../models/ticket");
 
-getMaterials.get("/get-materials", (req, res) => {
-    materials
+getTickets.get("/get-tickets", (req, res) => {
+    tickets
         .find({})
         .then(function (docs) {
             return res.json({
@@ -18,4 +18,4 @@ getMaterials.get("/get-materials", (req, res) => {
         })
 })
 
-module.exports = getMaterials;
+module.exports = getTickets;

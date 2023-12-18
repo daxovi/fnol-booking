@@ -4,30 +4,44 @@ import Map from './Map';
 import Summary from './Summary';
 
 const Booking = () => {
-    
-    const obsazene = ["101", "102"];
+
+    const [obsazene, setObsazene] = useState([]);
     const [vybrane, setVybrane] = useState([]);
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState("");
+
+
+    // DEBUG: START
+    const [materialy, setMaterialy] = useState([]);
+    const pridaniMaterialu = async () => {
+        const data = await fetch("http://127.0.0.1:5000/get-tickets");
+        const finalData = await data.json();
+        finalData.documents.map((ticket) => { console.log(ticket.ticket) }
+            )
+        // setObsazene(finalData.documents.ticket);
+    }
+    //DEBUG: END
 
     useEffect(() => {
-      loadDB();
+        loadDB();
     }, [])
 
     const loadDB = () => {
         console.log("nacitani z databaze");
+        pridaniMaterialu();
+        console.log("nacitani z databaze dokonceno");
     }
-    
+
     const handleClick = (e) => {
         if (checkAvailability(e.target.id)) {
             var index = vybrane.indexOf(e.target.id);
-        if (index == -1) {
-            setVybrane(arr => [...arr, e.target.id]);
-        } else {
-            var newArray = [...vybrane];
-            newArray.splice(index, 1);
-            setVybrane(newArray);
-            e.target.style.fill = "#00e000";
-        }
+            if (index == -1) {
+                setVybrane(arr => [...arr, e.target.id]);
+            } else {
+                var newArray = [...vybrane];
+                newArray.splice(index, 1);
+                setVybrane(newArray);
+                e.target.style.fill = "#00e000";
+            }
         }
     }
 
@@ -42,16 +56,25 @@ const Booking = () => {
     const reset = () => {
         vybrane.forEach(ticket => {
             const place = document.getElementById(ticket);
-        place.style.fill = "black";
+            place.style.fill = "black";
         });
-  
+
         setVybrane([]);
     }
 
     return (
         <div className='booking'>
             <div>
-            Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
+                {
+                    materialy.map((material, index) => {
+                        return (
+                            <div key={index}>{material.name}</div>
+                        )
+                    })
+                }
+            </div>
+            <div>
+                Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
             </div>
             <div className="row">
                 <div className="map">
