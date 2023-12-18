@@ -5,7 +5,7 @@ import Summary from './Summary';
 
 const Booking = () => {
 
-    const [obsazene, setObsazene] = useState([]);
+    const [obsazene, setObsazene] = useState(["101"]);
     const [vybrane, setVybrane] = useState([]);
     const [email, setEmail] = useState("");
 
