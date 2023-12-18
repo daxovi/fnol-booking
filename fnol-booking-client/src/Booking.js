@@ -5,7 +5,7 @@ import Summary from './Summary';
 
 const Booking = () => {
     
-    const obsazene = ["tlacitko5"];
+    const obsazene = ["101", "102"];
     const [vybrane, setVybrane] = useState([]);
     const [email, setEmail] = useState("")
 
@@ -26,7 +26,7 @@ const Booking = () => {
             var newArray = [...vybrane];
             newArray.splice(index, 1);
             setVybrane(newArray);
-            e.target.style.fill = "black";
+            e.target.style.fill = "#00e000";
         }
         }
     }

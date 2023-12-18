@@ -1,3 +1,39 @@
 .st0 {
     fill: #FF00FF;
 }
+
+.text-table {
+    font-family: OpenSans-Bold, 'Open Sans';
+    font-size: 17.7px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+
+.black-outline {
+    fill: none;
+    stroke: #000;
+    stroke-miterlimit: 10;
+}
+
+.table {
+    fill: #b3b3b3;
+}
+
+.cls-5 {
+    fill: #00e000;
+}
+
+.podium {
+    fill: #ccc;
+}
+
+.button {
+    color: #006d93;
+    text-transform: uppercase;
+    border: none;
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+    width: 100%;
+    font-weight: 700;
+    cursor: pointer;
+}
