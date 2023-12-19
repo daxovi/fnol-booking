@@ -22,16 +22,41 @@ const Summary = ({ vybrane, reset, handleEmail }) => {
         }
     }, [vybrane])
 
-    const saveEmail = () => {
-        if (vybrane.length > 0) {
-            console.log(email);
-            setProgress(1);
-        }
-    }
-
     const date = new Date()
     const expireDate = new Date(date);
     expireDate.setDate(date.getDate() + 1);
+
+    let backendServer = "http://127.0.0.1:5000" + "/save-ticket";
+
+    const nahraniObjednavky = () => { 
+        if (vybrane.length > 0) {
+        vybrane.forEach(ticket => {
+            vlozeniTicketu(ticket, email)
+        });
+        setProgress(1);
+    }
+     }
+
+    const vlozeniTicketu = (ticket, email) => {
+        fetch(backendServer,{
+            method:"post",
+            headers:{
+                "Accept":"application/json",
+                "Content-type":"application/json"
+            },
+            body:JSON.stringify({
+                ticket:ticket,
+                email:email,
+                date:expireDate
+            })
+        }).then((data) => {
+            return data.json();
+        }).then((finalData) => {
+            setEmail("");
+        })
+    }
+
+    
 
     if (progress == 0) {
         // Zadávání emailu
@@ -44,7 +69,7 @@ const Summary = ({ vybrane, reset, handleEmail }) => {
                     {listItems}
                     <li>Celkem vstupenek: {vybrane.length}</li>
                 </ul>
-                <form onSubmit={() => saveEmail()}>
+                <form onSubmit={() => nahraniObjednavky()}>
                     <div>
                         <label for="email">Váš e-mail: </label>
                         <br />

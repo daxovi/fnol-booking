@@ -5,20 +5,27 @@ import Summary from './Summary';
 
 const Booking = () => {
 
-    const [obsazene, setObsazene] = useState(["101"]);
+    const [obsazene, setObsazene] = useState([]);
     const [vybrane, setVybrane] = useState([]);
     const [email, setEmail] = useState("");
 
 
     // DEBUG: START
     const [materialy, setMaterialy] = useState([]);
-    const pridaniMaterialu = async () => {
-        const data = await fetch("http://127.0.0.1:5000/get-tickets");
-        const finalData = await data.json();
-        finalData.documents.map((ticket) => { console.log(ticket.ticket) }
-            )
-        // setObsazene(finalData.documents.ticket);
+    const pridaniMaterialu = () => {
+        fetch('http://127.0.0.1:5000/get-tickets')
+            .then(response => response.json())
+            .then((data) => {
+                let arr = [];
+                data.documents.forEach((ticket) => {
+                    console.log(ticket.ticket)
+                    arr = [...arr, ticket.ticket]
+                })
+            setObsazene(arr);
+            })
+            .catch(error => console.error(error));
     }
+
     //DEBUG: END
 
     useEffect(() => {
