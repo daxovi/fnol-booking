@@ -29,12 +29,17 @@ const Summary = ({ vybrane, reset }) => {
     let backendServer = "http://127.0.0.1:5000";
 
     const nahraniObjednavky = () => {
+        // TODO2 získat klíč z databáze
+        // TODO načíst aktuální db
+        // TODO zkontrolovat dostupnost všech vybraných míst
+        // TODO pokud kontrola proběhla v pořádku rezervaci udělat - jinak přeskočit na setPrograss(2)
         if (vybrane.length > 0) {
             vybrane.forEach(ticket => {
                 vlozeniTicketu(ticket, email)
             });
             setProgress(1);
         }
+        // TODO2 vrátit klíč databázi
     }
 
     const vlozeniTicketu = (ticket, email) => {
