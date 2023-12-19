@@ -7,12 +7,8 @@ const Booking = () => {
 
     const [obsazene, setObsazene] = useState([]);
     const [vybrane, setVybrane] = useState([]);
-    const [email, setEmail] = useState("");
 
-
-    // DEBUG: START
-    const [materialy, setMaterialy] = useState([]);
-    const pridaniMaterialu = () => {
+    const nacteniTicketu = () => {
         fetch('http://127.0.0.1:5000/get-tickets')
             .then(response => response.json())
             .then((data) => {
@@ -26,22 +22,14 @@ const Booking = () => {
             .catch(error => console.error(error));
     }
 
-    //DEBUG: END
-
     useEffect(() => {
-        loadDB();
+        nacteniTicketu();
     }, [])
-
-    const loadDB = () => {
-        console.log("nacitani z databaze");
-        pridaniMaterialu();
-        console.log("nacitani z databaze dokonceno");
-    }
 
     const handleClick = (e) => {
         if (checkAvailability(e.target.id)) {
             var index = vybrane.indexOf(e.target.id);
-            if (index == -1) {
+            if (index === -1) {
                 setVybrane(arr => [...arr, e.target.id]);
             } else {
                 var newArray = [...vybrane];
@@ -52,10 +40,6 @@ const Booking = () => {
         }
     }
 
-    const handleEmail = (email) => {
-        setEmail(email);
-    }
-
     const checkAvailability = (ticket) => {
         return !obsazene.includes(ticket)
     }
@@ -63,23 +47,14 @@ const Booking = () => {
     const reset = () => {
         vybrane.forEach(ticket => {
             const place = document.getElementById(ticket);
-            place.style.fill = "black";
+        place.style.fill = "#00e000";
+            nacteniTicketu();
         });
-
         setVybrane([]);
     }
 
     return (
         <div className='booking'>
-            <div>
-                {
-                    materialy.map((material, index) => {
-                        return (
-                            <div key={index}>{material.name}</div>
-                        )
-                    })
-                }
-            </div>
             <div>
                 Vítr skoro nefouká a tak by se na první pohled mohlo zdát, že se balónky snad vůbec nepohybují. Jenom tak klidně levitují ve vzduchu. Jelikož slunce jasně září a na obloze byste od východu k západu hledali mráček marně, balónky působí jako jakási fata morgána uprostřed pouště. Zkrátka široko daleko nikde nic, jen zelenkavá tráva, jasně modrá obloha a tři křiklavě barevné pouťové balónky, které se téměř nepozorovatelně pohupují ani ne moc vysoko, ani moc nízko nad zemí. Kdyby pod balónky nebyla sytě zelenkavá tráva, ale třeba suchá silnice či beton, možná by bylo vidět jejich barevné stíny - to jak přes poloprůsvitné barevné balónky prochází ostré sluneční paprsky.
             </div>
@@ -88,7 +63,7 @@ const Booking = () => {
                     <Map click={handleClick} vybrane={vybrane} obsazene={obsazene} />
                 </div>
                 <div className="">
-                    <Summary vybrane={vybrane} reset={reset} handleEmail={handleEmail} />
+                    <Summary vybrane={vybrane} reset={reset} />
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Summary.css'
 
-const Summary = ({ vybrane, reset, handleEmail }) => {
+const Summary = ({ vybrane, reset }) => {
 
     const listItems = vybrane.map((number) =>
         <li>{number}</li>
@@ -17,7 +17,7 @@ const Summary = ({ vybrane, reset, handleEmail }) => {
     }, [progress])
 
     useEffect(() => {
-        if (progress == 2 && vybrane.length == 1) {
+        if (progress === 2 && vybrane.length === 1) {
             setProgress(0)
         }
     }, [vybrane])
@@ -26,37 +26,37 @@ const Summary = ({ vybrane, reset, handleEmail }) => {
     const expireDate = new Date(date);
     expireDate.setDate(date.getDate() + 1);
 
-    let backendServer = "http://127.0.0.1:5000" + "/save-ticket";
+    let backendServer = "http://127.0.0.1:5000";
 
-    const nahraniObjednavky = () => { 
+    const nahraniObjednavky = () => {
         if (vybrane.length > 0) {
-        vybrane.forEach(ticket => {
-            vlozeniTicketu(ticket, email)
-        });
-        setProgress(1);
+            vybrane.forEach(ticket => {
+                vlozeniTicketu(ticket, email)
+            });
+            setProgress(1);
+        }
     }
-     }
 
     const vlozeniTicketu = (ticket, email) => {
-        fetch(backendServer,{
-            method:"post",
-            headers:{
-                "Accept":"application/json",
-                "Content-type":"application/json"
+        fetch(backendServer + "/save-ticket", {
+            method: "post",
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
             },
-            body:JSON.stringify({
-                ticket:ticket,
-                email:email,
-                date:expireDate
+            body: JSON.stringify({
+                ticket: ticket,
+                email: email,
+                date: expireDate
             })
-        }).then((data) => {
-            return data.json();
-        }).then((finalData) => {
-            setEmail("");
         })
+            .then((data) => {
+                return data.json();
+            })
+            .then((finalData) => {
+                setEmail("");
+            })
     }
-
-    
 
     if (progress == 0) {
         // Zadávání emailu
@@ -119,6 +119,7 @@ const Summary = ({ vybrane, reset, handleEmail }) => {
                     Vyberte si nové vstupenky v plánu sálu.
                 </div>
                 <button type="button" onClick={() => setProgress(0)}>DEBUG: dalsi obraz</button>
+                <button type="button" onClick={() => window.location.reload()}>Načíst znovu</button>
             </div>
         )
     }
