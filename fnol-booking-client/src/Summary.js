@@ -43,7 +43,7 @@ const Summary = ({ vybrane, reset }) => {
     }
 
     const vlozeniTicketu = (ticket, email) => {
-        fetch(backendServer + "/save-ticket", {
+        fetch(process.env.REACT_APP_BACKEND + "/save-ticket", {
             method: "post",
             headers: {
                 "Accept": "application/json",
@@ -56,10 +56,12 @@ const Summary = ({ vybrane, reset }) => {
             })
         })
             .then((data) => {
-                return data.json();
+                console.log(data);
+              //  return data.json();
             })
             .then((finalData) => {
                 setEmail("");
+                console.log(finalData);
             })
     }
 

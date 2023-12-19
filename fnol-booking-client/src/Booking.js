@@ -9,7 +9,7 @@ const Booking = () => {
     const [vybrane, setVybrane] = useState([]);
 
     const nacteniTicketu = () => {
-        fetch('http://127.0.0.1:5000/get-tickets')
+        fetch(process.env.REACT_APP_BACKEND + '/get-tickets')
             .then(response => response.json())
             .then((data) => {
                 let arr = [];
