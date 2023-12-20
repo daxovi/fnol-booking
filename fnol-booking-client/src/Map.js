@@ -41,8 +41,8 @@ const Map = ({ click, vybrane, obsazene }) => {
     return (
       // TODO přidat grafiku se skrytým plánkem a tlačítkem na znovunačtení
       <div>
-        <div>
-          <a className='button' onClick={() => {changeFloor(0)}}>Přízemí</a>
+        <div className='floor-switch'>
+          <a active className='button button-active' onClick={() => {changeFloor(0)}}>Přízemí</a>
           <a className="button" onClick={() => {changeFloor(1)}}>Galerie</a>
         </div>
         <svg

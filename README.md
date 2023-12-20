@@ -10,3 +10,5 @@ upravit aby se kontrolovala dostupnost
 return možnost znovunačtení mapy, když se rezervace neprovede a tím 
 
 Upravit grafiku tak aby byl plánek na celou šířku
+
+Přidat místo pro poznámky v adminu

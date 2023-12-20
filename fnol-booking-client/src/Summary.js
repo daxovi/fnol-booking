@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Summary.css'
+import { nahraniObjednavky } from './components/api';
 
 const Summary = ({ vybrane, reset }) => {
 
@@ -7,63 +8,18 @@ const Summary = ({ vybrane, reset }) => {
         <li>{number}</li>
     );
 
-    const [progress, setProgress] = useState(0)
-    const [email, setEmail] = useState("")
-
-    useEffect(() => {
-        if (progress == 2) {
-            reset()
-        }
-    }, [progress])
-
-    useEffect(() => {
-        if (progress === 2 && vybrane.length === 1) {
-            setProgress(0)
-        }
-    }, [vybrane])
-
     const date = new Date()
     const expireDate = new Date(date);
     expireDate.setDate(date.getDate() + 1);
 
-    let backendServer = "http://127.0.0.1:5000";
+    const [progress, setProgress] = useState(0)
+    const [email, setEmail] = useState("")
 
-    const nahraniObjednavky = () => {
-        // TODO2 získat klíč z databáze
-        // TODO načíst aktuální db
-        // TODO zkontrolovat dostupnost všech vybraných míst
-        // TODO pokud kontrola proběhla v pořádku rezervaci udělat - jinak přeskočit na setPrograss(2)
-        if (vybrane.length > 0) {
-            vybrane.forEach(ticket => {
-                vlozeniTicketu(ticket, email)
-            });
-            setProgress(1);
+    useEffect(() => {
+        if (progress == 2 && vybrane.length === 1) {
+            setProgress(0)
         }
-        // TODO2 vrátit klíč databázi
-    }
-
-    const vlozeniTicketu = (ticket, email) => {
-        fetch(process.env.REACT_APP_BACKEND + "/save-ticket", {
-            method: "post",
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify({
-                ticket: ticket,
-                email: email,
-                date: expireDate
-            })
-        })
-            .then((data) => {
-                console.log(data);
-              //  return data.json();
-            })
-            .then((finalData) => {
-                setEmail("");
-                console.log(finalData);
-            })
-    }
+    }, [vybrane])
 
     if (progress == 0) {
         // Zadávání emailu
@@ -76,7 +32,14 @@ const Summary = ({ vybrane, reset }) => {
                     {listItems}
                     <li>Celkem vstupenek: {vybrane.length}</li>
                 </ul>
-                <form onSubmit={() => nahraniObjednavky()}>
+                <form onSubmit={(event) => {
+                    event.preventDefault();
+                    nahraniObjednavky(vybrane, email)
+                    .then((progress) => {
+                        setProgress(progress)
+                        reset()
+                    })
+                }}>
                     <div>
                         <label for="email">Váš e-mail: </label>
                         <br />

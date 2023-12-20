@@ -6,6 +6,9 @@ const ticket = new mongoose.Schema({
     email:{
         type:String
     },
+    notes:{
+        type:String
+    },
     date:{
         type:String
     }

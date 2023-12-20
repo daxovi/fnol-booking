@@ -12,11 +12,11 @@ saveTicket.post("/save-ticket", (req, res) => {
    surovina
       .save()
       .then(() => {
-         res.sendStatus(200);
+         res.status(200).json({ message: "Ticket úspěšně uložen" });
       })
       .catch((err) => {
          console.log("surovina nebyla uložena");
-         res.sendStatus(500);
+         res.status(500).json({ error: "Chyba při ukládání ticketu" });
       });
 })
 

@@ -2,28 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './Booking.css';
 import Map from './Map';
 import Summary from './Summary';
+import { nacteniTicketu } from './components/api';
 
 const Booking = () => {
 
     const [obsazene, setObsazene] = useState([]);
     const [vybrane, setVybrane] = useState([]);
 
-    const nacteniTicketu = () => {
-        fetch(process.env.REACT_APP_BACKEND + '/get-tickets')
-            .then(response => response.json())
-            .then((data) => {
-                let arr = [];
-                data.documents.forEach((ticket) => {
-                    console.log(ticket.ticket)
-                    arr = [...arr, ticket.ticket]
-                })
-            setObsazene(arr);
-            })
-            .catch(error => console.error(error));
-    }
-
     useEffect(() => {
-        nacteniTicketu();
+        nacteniTicketu()
+        .then(data => {
+            setObsazene(data); // Nastaví získaná data
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
     }, [])
 
     const handleClick = (e) => {
@@ -47,10 +40,13 @@ const Booking = () => {
     const reset = () => {
         vybrane.forEach(ticket => {
             const place = document.getElementById(ticket);
-        place.style.fill = "#00e000";
-            nacteniTicketu();
+            place.style.fill = "#00e000";
         });
-        setVybrane([]);
+        nacteniTicketu()
+        .then((arr) => { 
+            setObsazene(arr);
+            setVybrane([]);
+         })
     }
 
     return (
